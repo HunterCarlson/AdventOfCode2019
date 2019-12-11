@@ -9,7 +9,8 @@ namespace AdventOfCode2019
             Console.WriteLine("Advent of Code 2019");
 
             //Day1.Solve();
-            Day2.Solve();
+            //Day2.Solve();
+            Day3.Solve();
 
             Console.Read();
         }
