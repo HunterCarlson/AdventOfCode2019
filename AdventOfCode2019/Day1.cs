@@ -19,7 +19,6 @@ namespace AdventOfCode2019
             Part2();
         }
 
-
         private static void Part1()
         {
             IEnumerable<int> moduleMasses = GetModuleMasses();
