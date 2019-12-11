@@ -18,7 +18,7 @@ namespace AdventOfCode2019
             //Test1();
 
             Part1();
-            //Part2();
+            Part2();
         }
 
         private static void Test1()
@@ -57,8 +57,11 @@ namespace AdventOfCode2019
 
         private static void Part2()
         {
+            (int noun, int verb) inputs = FindInputs();
+
             Console.WriteLine("Part 2:");
-            Console.WriteLine("");
+            Console.WriteLine($"100 * {inputs.noun} + {inputs.verb} =");
+            Console.WriteLine($"{100 * inputs.noun + inputs.verb}");
             Console.WriteLine();
         }
 
@@ -100,19 +103,13 @@ namespace AdventOfCode2019
 
                 int a = intCode[pos1];
                 int b = intCode[pos2];
-                int output;
 
-                switch (opCode)
+                int output = opCode switch
                 {
-                    case 1:
-                        output = a + b;
-                        break;
-                    case 2:
-                        output = a * b;
-                        break;
-                    default:
-                        throw new InvalidOperationException($"Invalid OpCode: {opCode}");
-                }
+                    1 => (a + b),
+                    2 => (a * b),
+                    _ => throw new InvalidOperationException($"Invalid OpCode: {opCode}")
+                };
 
                 intCode[posOutput] = output;
 
@@ -120,6 +117,32 @@ namespace AdventOfCode2019
             }
 
             return intCode;
+        }
+
+        private static (int noun, int verb) FindInputs()
+        {
+            List<int> cleanIntCode = GetIntCode().ToList();
+
+            foreach (int noun in Enumerable.Range(0, 100))
+            {
+                foreach (int verb in Enumerable.Range(0, 100))
+                {
+                    var intCode = new List<int>(cleanIntCode)
+                    {
+                        [1] = noun,
+                        [2] = verb
+                    };
+
+                    List<int> result = Compute(intCode);
+
+                    if (result[0] == 19690720)
+                    {
+                        return (noun, verb);
+                    }
+                }
+            }
+
+            throw new Exception("No matching inputs found");
         }
     }
 }
