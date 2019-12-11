@@ -7,4 +7,14 @@
     <Company />
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Input\Day1Input.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Input\Day1Input.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -2,11 +2,15 @@
 
 namespace AdventOfCode2019
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Advent of Code 2019");
+
+            Day1.Solve();
+
+            Console.Read();
         }
     }
 }
