@@ -5,12 +5,21 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>Hunter Carlson</Authors>
     <Company />
+    <RepositoryUrl>https://github.com/HunterCarlson/AdventOfCode2019</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>AdventOfCodeIcon.png</PackageIcon>
+    <PackageIconUrl />
+    <Description>https://adventofcode.com/2019</Description>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Input\Day1Input.txt" />
     <None Remove="Input\Day2Input.txt" />
     <None Remove="Input\Day3Input.txt" />
+    <None Include="AdventOfCodeIcon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +32,10 @@
     <Content Include="Input\Day3Input.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MathTools\MathTools.csproj" />
   </ItemGroup>
 
 </Project>
