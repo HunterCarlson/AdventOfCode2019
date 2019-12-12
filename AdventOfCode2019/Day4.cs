@@ -19,7 +19,7 @@ namespace AdventOfCode2019
             Console.WriteLine();
 
             Part1();
-            //Part2();
+            Part2();
         }
 
         private static void Part1()
@@ -33,8 +33,11 @@ namespace AdventOfCode2019
 
         private static void Part2()
         {
+            List<int> validPasswords = Enumerable.Range(Min, Max - Min).Where(i => HasExactlyTwoSameAdjacentDigits(i) && DigitsNeverDecrease(i))
+                .ToList();
+
             Console.WriteLine("Part 2:");
-            Console.WriteLine("");
+            Console.WriteLine($"Valid Passwords: {validPasswords.Count}");
             Console.WriteLine();
         }
 
@@ -51,6 +54,13 @@ namespace AdventOfCode2019
             }
 
             return false;
+        }
+
+        private static bool HasExactlyTwoSameAdjacentDigits(int n)
+        {
+            string str = n.ToString();
+
+            return str.GroupBy(c => c).Select(g => g.Count()).Any(count => count == 2);
         }
 
         private static bool DigitsNeverDecrease(int n)
