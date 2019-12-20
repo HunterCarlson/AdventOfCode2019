@@ -18,7 +18,10 @@ namespace AdventOfCode2019
             //Test1();
 
             Part1();
+            // 3790645
+
             Part2();
+            // 6577
         }
 
         private static void Test1()
@@ -38,7 +41,7 @@ namespace AdventOfCode2019
                 40,
                 50
             };
-            List<int> result = Compute(intCode);
+            List<int> result = IntcodeComputer.Compute(intCode);
         }
 
         private static void Part1()
@@ -48,7 +51,7 @@ namespace AdventOfCode2019
             intCode[1] = 12;
             intCode[2] = 2;
 
-            List<int> result = Compute(intCode);
+            List<int> result = IntcodeComputer.Compute(intCode);
 
             Console.WriteLine("Part 1:");
             Console.WriteLine($"Position 0: {result[0]}");
@@ -57,11 +60,11 @@ namespace AdventOfCode2019
 
         private static void Part2()
         {
-            (int noun, int verb) inputs = FindInputs();
+            (int noun, int verb) = FindInputs();
 
             Console.WriteLine("Part 2:");
-            Console.WriteLine($"100 * {inputs.noun} + {inputs.verb} =");
-            Console.WriteLine($"{100 * inputs.noun + inputs.verb}");
+            Console.WriteLine($"100 * {noun} + {verb} =");
+            Console.WriteLine($"{100 * noun + verb}");
             Console.WriteLine();
         }
 
@@ -69,53 +72,7 @@ namespace AdventOfCode2019
         {
             string inputFilePath = $"{Environment.CurrentDirectory}/Input/Day2Input.txt";
             string txt = File.ReadAllText(inputFilePath);
-            IEnumerable<int> intCode = txt.Split(',').Select(int.Parse);
-            return intCode;
-        }
-
-        private static List<int> Compute(List<int> intCode)
-        {
-            int currentPos = 0;
-            int[] validOpCodes =
-            {
-                1,
-                2,
-                99
-            };
-
-            while (true)
-            {
-                int opCode = intCode[currentPos];
-
-                if (!validOpCodes.Contains(opCode))
-                {
-                    throw new InvalidOperationException($"Invalid OpCode: {opCode}");
-                }
-
-                if (opCode == 99)
-                {
-                    break;
-                }
-
-                int pos1 = intCode[currentPos + 1];
-                int pos2 = intCode[currentPos + 2];
-                int posOutput = intCode[currentPos + 3];
-
-                int a = intCode[pos1];
-                int b = intCode[pos2];
-
-                int output = opCode switch
-                {
-                    1 => (a + b),
-                    2 => (a * b),
-                    _ => throw new InvalidOperationException($"Invalid OpCode: {opCode}")
-                };
-
-                intCode[posOutput] = output;
-
-                currentPos += 4;
-            }
-
+            IEnumerable<int> intCode = IntcodeComputer.ParseIntcode(txt);
             return intCode;
         }
 
@@ -133,7 +90,7 @@ namespace AdventOfCode2019
                         [2] = verb
                     };
 
-                    List<int> result = Compute(intCode);
+                    List<int> result = IntcodeComputer.Compute(intCode);
 
                     if (result[0] == 19690720)
                     {
