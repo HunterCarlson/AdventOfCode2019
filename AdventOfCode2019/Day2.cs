@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 
@@ -41,20 +42,24 @@ namespace AdventOfCode2019
                 40,
                 50
             };
-            List<int> result = IntcodeComputer.Compute(intCode);
+
+            var computer = new IntcodeComputer(intCode);
+            computer.Compute();
+
+            List<int> result = computer.Memory;
         }
 
         private static void Part1()
         {
             List<int> intCode = GetIntCode().ToList();
 
-            intCode[1] = 12;
-            intCode[2] = 2;
-
-            List<int> result = IntcodeComputer.Compute(intCode);
+            var computer = new IntcodeComputer(intCode);
+            computer.Memory[1] = 12;
+            computer.Memory[2] = 2;
+            computer.Compute();
 
             Console.WriteLine("Part 1:");
-            Console.WriteLine($"Position 0: {result[0]}");
+            Console.WriteLine($"Position 0: {computer.Memory[0]}");
             Console.WriteLine();
         }
 
@@ -78,21 +83,19 @@ namespace AdventOfCode2019
 
         private static (int noun, int verb) FindInputs()
         {
-            List<int> cleanIntCode = GetIntCode().ToList();
+            List<int> intcode = GetIntCode().ToList();
+            var computer = new IntcodeComputer(intcode);
 
             foreach (int noun in Enumerable.Range(0, 100))
             {
                 foreach (int verb in Enumerable.Range(0, 100))
                 {
-                    var intCode = new List<int>(cleanIntCode)
-                    {
-                        [1] = noun,
-                        [2] = verb
-                    };
+                    computer.Reset();
+                    computer.Memory[1] = noun;
+                    computer.Memory[2] = verb;
+                    computer.Compute();
 
-                    List<int> result = IntcodeComputer.Compute(intCode);
-
-                    if (result[0] == 19690720)
+                    if (computer.Memory[0] == 19690720)
                     {
                         return (noun, verb);
                     }

@@ -6,19 +6,36 @@ namespace AdventOfCode2019
 {
     public class IntcodeComputer
     {
+        private readonly List<int> _program;
+
+        public List<int> Output { get; private set; }
+        public List<int> Memory { get; private set; }
+
+        public IntcodeComputer(List<int> intcode)
+        {
+            _program = intcode;
+            Reset();
+        }
+
+        public void Reset()
+        {
+            Memory = new List<int>(_program);
+            Output = new List<int>();
+        }
+
         public static IEnumerable<int> ParseIntcode(string txt)
         {
             IEnumerable<int> intCode = txt.Split(',').Select(int.Parse);
             return intCode;
         }
 
-        public static List<int> Compute(List<int> intcode)
+        public void Compute()
         {
             int currentPos = 0;
 
             while (true)
             {
-                int opCodeInt = intcode[currentPos];
+                int opCodeInt = Memory[currentPos];
 
                 if (!Enum.IsDefined(typeof(OpCode), opCodeInt))
                 {
@@ -32,12 +49,12 @@ namespace AdventOfCode2019
                     break;
                 }
 
-                int pos1 = intcode[currentPos + 1];
-                int pos2 = intcode[currentPos + 2];
-                int posOutput = intcode[currentPos + 3];
+                int pos1 = Memory[currentPos + 1];
+                int pos2 = Memory[currentPos + 2];
+                int posOutput = Memory[currentPos + 3];
 
-                int a = intcode[pos1];
-                int b = intcode[pos2];
+                int a = Memory[pos1];
+                int b = Memory[pos2];
 
                 int output = opCode switch
                 {
@@ -47,18 +64,18 @@ namespace AdventOfCode2019
                     _ => throw new InvalidOperationException($"Invalid OpCode: {opCode}")
                 };
 
-                intcode[posOutput] = output;
+                Memory[posOutput] = output;
 
                 currentPos += 4;
             }
-
-            return intcode;
         }
 
         private enum OpCode
         {
             Add = 1,
             Multiply = 2,
+            Input = 3,
+            Output = 4,
             Halt = 99
         }
     }
