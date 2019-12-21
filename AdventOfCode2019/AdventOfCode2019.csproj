@@ -16,6 +16,7 @@
     <None Remove="Input\Day1Input.txt" />
     <None Remove="Input\Day2Input.txt" />
     <None Remove="Input\Day3Input.txt" />
+    <None Remove="Input\Day5Input.txt" />
     <None Include="AdventOfCodeIcon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -30,6 +31,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Input\Day3Input.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Input\Day5Input.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

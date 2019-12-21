@@ -51,7 +51,7 @@ namespace AdventOfCode2019
 
         private static void Part1()
         {
-            List<int> intCode = GetIntCode().ToList();
+            List<int> intCode = GetIntCode();
 
             var computer = new IntcodeComputer(intCode);
             computer.Memory[1] = 12;
@@ -73,17 +73,17 @@ namespace AdventOfCode2019
             Console.WriteLine();
         }
 
-        private static IEnumerable<int> GetIntCode()
+        private static List<int> GetIntCode()
         {
             string inputFilePath = $"{Environment.CurrentDirectory}/Input/Day2Input.txt";
             string txt = File.ReadAllText(inputFilePath);
-            IEnumerable<int> intCode = IntcodeComputer.ParseIntcode(txt);
+            var intCode = IntcodeComputer.ParseIntcode(txt).ToList();
             return intCode;
         }
 
         private static (int noun, int verb) FindInputs()
         {
-            List<int> intcode = GetIntCode().ToList();
+            List<int> intcode = GetIntCode();
             var computer = new IntcodeComputer(intcode);
 
             foreach (int noun in Enumerable.Range(0, 100))
